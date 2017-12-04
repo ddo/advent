@@ -19,13 +19,9 @@ func Day3(input int) (step int) {
 		return
 	}
 
-	sqrt := math.Sqrt(float64(input))
-	sqrtTrunc := math.Trunc(sqrt)
+	sqrt := int(math.Ceil(math.Sqrt(float64(input))))
 
-	width := int(sqrtTrunc)
-	if sqrt > sqrtTrunc {
-		width = int(sqrtTrunc + 1)
-	}
+	width := sqrt
 
 	// odd only
 	if width%2 == 0 {
