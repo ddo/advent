@@ -63,3 +63,29 @@ func TestDay3(t *testing.T) {
 func TestInput(t *testing.T) {
 	Day3(input)
 }
+
+var testCasesBonus = map[int]int{
+	1:   2,
+	20:  23,
+	50:  54,
+	130: 133,
+	134: 142,
+	142: 147,
+	500: 747,
+	800: 806,
+}
+
+func TestBonus(t *testing.T) {
+	for i := 0; i < len(testCasesBonus); i++ {
+		for k, v := range testCasesBonus {
+			if Bonus(k) != v {
+				t.Error(k, v)
+				return
+			}
+		}
+	}
+}
+
+func TestInputBonus(t *testing.T) {
+	Bonus(input)
+}
