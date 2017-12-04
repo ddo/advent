@@ -6,8 +6,9 @@ import (
 )
 
 type point struct {
-	x int
-	y int
+	x     int
+	y     int
+	value int
 }
 
 // Day3 .
@@ -30,6 +31,7 @@ func Day3(input int) (step int) {
 
 	start := point{x: width / 2, y: width / 2}
 	end := point{x: width - 1, y: width - 1}
+	end.value = (end.x + 1) * (end.y + 1)
 
 	// loop to find
 	target := findSpiral(end, width, input)
@@ -49,7 +51,6 @@ func abs(i int) int {
 
 func findSpiral(end point, width, input int) (target point) {
 	target = end
-	targetI := (end.x + 1) * (end.y + 1)
 
 	reverse := false
 	for {
@@ -57,11 +58,11 @@ func findSpiral(end point, width, input int) (target point) {
 
 		// horizontal
 		for i := 0; i < width-1; i++ {
-			if targetI == input {
+			if target.value == input {
 				return
 			}
 
-			targetI--
+			target.value--
 			if reverse {
 				target.x--
 			} else {
@@ -71,11 +72,11 @@ func findSpiral(end point, width, input int) (target point) {
 
 		// vertical
 		for i := 0; i < width-1; i++ {
-			if targetI == input {
+			if target.value == input {
 				return
 			}
 
-			targetI--
+			target.value--
 			if reverse {
 				target.y--
 			} else {
