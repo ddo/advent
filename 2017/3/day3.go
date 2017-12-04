@@ -5,8 +5,13 @@ import (
 	"math"
 )
 
+type point struct {
+	x int
+	y int
+}
+
+// Day3 .
 func Day3(input int) (step int) {
-	fmt.Println("-------------------")
 	fmt.Println("input:", input)
 
 	if input <= 1 {
@@ -14,39 +19,72 @@ func Day3(input int) (step int) {
 		return
 	}
 
-	// level
-	sqrt := int(math.Sqrt(float64(input)))
-	levelOdd := sqrt
+	sqrt := math.Sqrt(float64(input))
+	sqrtTrunc := math.Trunc(sqrt)
+
+	width := int(sqrtTrunc)
+	if sqrt > sqrtTrunc {
+		width = int(sqrtTrunc + 1)
+	}
+
 	// odd only
-	if sqrt%2 == 0 {
-		levelOdd = sqrt - 1
-	}
-	level := levelOdd/2 + 1
-
-	fmt.Println("sqrt:", sqrt)
-	fmt.Println("levelOdd:", levelOdd)
-	fmt.Println("level:", level)
-
-	// diagonal
-	if (input-(levelOdd*levelOdd))%(level*2) == 0 {
-		fmt.Println("diagonal")
-		if input == sqrt*sqrt {
-			step = levelOdd - 1
-		} else {
-			step = levelOdd + 1
-		}
-
-		// vetical/horizontal
-	} else if (input-(levelOdd*levelOdd+level))%(level*2) == 0 {
-		fmt.Println("vetical/horizontal")
-		step = level
-
-		// not special
-	} else {
-		fmt.Println("not special")
-		step = levelOdd
+	if width%2 == 0 {
+		width = width + 1
 	}
 
+	start := point{x: width / 2, y: width / 2}
+	end := point{x: width - 1, y: width - 1}
+
+	// loop to find
+	target := findSpiral(end, width, input)
+
+	// manhattan distance
+	step = abs(target.x-start.x) + abs(target.y-start.y)
 	fmt.Println("step:", step)
 	return
+}
+
+func abs(i int) int {
+	if i < 0 {
+		i = 0 - i
+	}
+	return i
+}
+
+func findSpiral(end point, width, input int) (target point) {
+	target = end
+	targetI := (end.x + 1) * (end.y + 1)
+
+	reverse := false
+	for {
+		reverse = !reverse
+
+		// horizontal
+		for i := 0; i < width-1; i++ {
+			if targetI == input {
+				return
+			}
+
+			targetI--
+			if reverse {
+				target.x--
+			} else {
+				target.x++
+			}
+		}
+
+		// vertical
+		for i := 0; i < width-1; i++ {
+			if targetI == input {
+				return
+			}
+
+			targetI--
+			if reverse {
+				target.y--
+			} else {
+				target.y++
+			}
+		}
+	}
 }
