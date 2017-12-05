@@ -4,10 +4,10 @@ import (
 	"testing"
 )
 
-var testCases = []map[string]int{
-	{`5	1	9	5
+var testCases = map[string]int{
+	`5	1	9	5
 7	5	3
-2	4	6	8`: 18},
+2	4	6	8`: 18,
 }
 
 var input = `157	564	120	495	194	520	510	618	244	443	471	473	612	149	506	138
@@ -28,12 +28,10 @@ var input = `157	564	120	495	194	520	510	618	244	443	471	473	612	149	506	138
 411	178	4263	4690	3653	162	3201	4702	3129	2685	3716	147	3790	4888	79	165`
 
 func TestDay2(t *testing.T) {
-	for i := 0; i < len(testCases); i++ {
-		for k, v := range testCases[i] {
-			if Day2(k) != v {
-				t.Error(testCases[i])
-				return
-			}
+	for k, v := range testCases {
+		if Day2(k) != v {
+			t.Error(testCases)
+			return
 		}
 	}
 }
@@ -42,19 +40,17 @@ func TestInput(t *testing.T) {
 	Day2(input)
 }
 
-var testCasesBonus = []map[string]int{
-	{`5	9	2	8
+var testCasesBonus = map[string]int{
+	`5	9	2	8
 9	4	7	3
-3	8	6	5`: 9},
+3	8	6	5`: 9,
 }
 
 func TestBonus(t *testing.T) {
-	for i := 0; i < len(testCasesBonus); i++ {
-		for k, v := range testCasesBonus[i] {
-			if Bonus(k) != v {
-				t.Error(testCasesBonus[i])
-				return
-			}
+	for k, v := range testCasesBonus {
+		if Bonus(k) != v {
+			t.Error(testCasesBonus)
+			return
 		}
 	}
 }
